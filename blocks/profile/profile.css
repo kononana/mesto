@@ -1,0 +1,7 @@
+.profile {
+    margin: 0;
+    margin-top: 40px;
+    width: calc(100% - 200px*2);
+    display: flex;
+    justify-content: space-between;
+}
