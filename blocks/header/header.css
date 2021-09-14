@@ -1,5 +1,6 @@
 .header {
     margin: 0;
-    width: calc(100% - 200px*2);
+    max-width: 880px;
     margin-top: 45px;
+    margin-left: 200px;
 }
