@@ -5,9 +5,12 @@
     flex-direction: column;
     justify-content: center;
     overflow: hidden;
+    width: 100%;
+    background-color: white;
+    position: relative;
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 425px) {
     .element {
         margin: 0 auto;
         width: 282px;
