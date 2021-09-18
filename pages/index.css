@@ -20,110 +20,12 @@
  @import url(../blocks/footer/footer.css);
  @import url(../blocks/footer/__copyright/footer__copyright.css);
  @import url(../blocks/content/content.css);
+ @import url(../blocks/popup/popup.css);
+ @import url(../blocks/popup/__form/popup__form.css);
+ @import url(../blocks/popup/__item/popup__item.css);
+ @import url(../blocks/popup/__open/popup__open.css);
+ @import url(../blocks/popup/__overlay/popup__overlay.css);
+ @import url(../blocks/popup/__submit/popup__submit.css);
+ @import url(../blocks/popup/__title/popup__title.css);
+ @import url(../blocks/popup/__close/popup__close.css);
  /**/
- 
- .popup {
-     position: fixed;
-     top: 0;
-     left: 0;
-     right: 0;
-     bottom: 0;
-     z-index: 1;
-     display: none;
-     align-items: center;
-     justify-content: center;
- }
- 
- .popup__form {
-     width: 100%;
-     max-width: 430px;
-     background-color: white;
-     position: relative;
-     margin: auto;
-     z-index: 2;
-     border-radius: 10%;
-     box-sizing: border-box;
- }
- 
- .popup__title {
-     margin: 0;
-     padding-top: 34px;
-     padding-left: 36px;
-     font-family: Inter;
-     font-size: 24px;
-     font-style: normal;
-     font-weight: 900;
-     line-height: 29px;
-     text-align: left;
-     margin-bottom: 54px;
- }
- 
- .popup__item {
-     margin: 0;
-     width: 358px;
-     height: 27px;
-     border: none;
-     border-bottom: 1px solid #000000;
-     opacity: 0.2;
-     margin-left: 36px;
-     margin-top: 30px;
- }
- 
- .popup__item::placeholder {
-     font-family: Inter;
-     font-style: normal;
-     font-weight: normal;
-     font-size: 14px;
-     line-height: 17px;
-     color: black;
- }
- 
- .popup__overlay {
-     width: 100%;
-     height: 100%;
-     background-color: black;
-     opacity: 0.8;
-     position: absolute;
-     top: 0;
-     left: 0;
- }
- 
- .popup__submit {
-     width: 358px;
-     height: 50px;
-     background: #000000;
-     border-radius: 2px;
-     margin-left: 36px;
-     margin-top: 48px;
-     margin-bottom: 37px;
-     background-color: black;
-     color: white;
-     font-family: Inter;
-     font-size: 18px;
-     font-style: normal;
-     font-weight: 400;
-     line-height: 22px;
-     text-align: center;
-     cursor: pointer;
-     border-radius: 2px;
-     padding-top: 14px;
-     padding-bottom: 18px;
- }
- 
- .popup__close {
-     width: 32px;
-     height: 32px;
-     background-color: black;
-     background-image: url(/images/close.svg);
-     border: none;
-     cursor: poiter;
-     position: absolute;
-     top: -30px;
-     right: -40px;
- }
- 
- .popup__opened {
-     display: flex;
-     align-items: center;
-     justify-content: center;
- }

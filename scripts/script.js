@@ -3,7 +3,7 @@ const popupOpenBtn = document.querySelector('.profile__edit-button');
 const popupCloseBtn = popup.querySelector('.popup__close');
 
 function popupToggle() {
-    popup.classList.toggle('popup__opened')
+    popup.classList.toggle('popup__open')
 
 }
 popupOpenBtn.addEventListener('click', popupToggle);

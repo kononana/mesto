@@ -8,15 +8,9 @@
     text-rendering: optimizeLegibility;
 }
 
-@media screen and (max-width: 1279px) {
-    .page {
-        max-width: 1024px;
-    }
-}
-
 @media screen and (max-width: 1023px) {
     .page {
-        max-width: 768px;
+        max-width: 880px;
     }
 }
 

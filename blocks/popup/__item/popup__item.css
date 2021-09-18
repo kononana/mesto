@@ -1,0 +1,26 @@
+.popup__item {
+    margin: 0;
+    width: 358px;
+    height: 27px;
+    border: none;
+    border-bottom: 1px solid #000000;
+    opacity: 0.2;
+    margin-left: 36px;
+    margin-top: 30px;
+    color: black;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+}
+
+@media screen and (max-width: 767px) {
+    .popup__item {
+        margin: 0 22px 30px;
+        width: 238px;
+    }
+    .popup__item:last-of-type {
+        margin-bottom: 0;
+    }
+}
