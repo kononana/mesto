@@ -1,15 +1,17 @@
 .footer__copyright {
     margin: 0;
+    padding-left: 5px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: normal;
     font-size: 18px;
     line-height: 22px;
-    font-weight: 400;
     color: #545454;
-    padding-bottom: 60px;
 }
 
 @media screen and (max-width: 1023px) {
     .footer__copyright {
-        padding: 0 21px 60px;
+        margin-left: 19px;
     }
 }
 
@@ -17,7 +19,5 @@
     .footer__copyright {
         font-size: 14px;
         line-height: 17px;
-        padding: 0 19px 36px;
-        padding-bottom: 36px;
     }
 }
