@@ -10,6 +10,12 @@
     justify-content: center;
 }
 
+@media screen and (max-width: 950px) {
+    .elements {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
 @media screen and (max-width: 767px) {
     .elements {
         grid-template-columns: 1fr;

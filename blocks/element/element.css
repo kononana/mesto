@@ -1,4 +1,4 @@
-.element {
+    .element {
     width: auto;
     border-radius: 10px;
     display: flex;
@@ -10,9 +10,8 @@
     position: relative;
 }
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 768px) {
     .element {
         margin: 0 auto;
         max-width: 282px;
     }
-}
