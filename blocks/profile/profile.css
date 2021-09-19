@@ -1,7 +1,7 @@
 .profile {
     margin: 0 auto;
     margin-top: 40px;
-    margin-bottom: 51px;
+    margin-bottom: 46.25px;
     max-width: 880px;
     display: flex;
     justify-content: space-between;
@@ -12,5 +12,6 @@
     .profile {
         flex-direction: column;
         margin-top: 38.25px;
+        margin-bottom: 0;
     }
 }

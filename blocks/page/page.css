@@ -6,6 +6,7 @@
     font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
     box-sizing: border-box;
     text-rendering: optimizeLegibility;
+    overflow-x: hidden;
 }
 
 @media screen and (max-width: 1023px) {

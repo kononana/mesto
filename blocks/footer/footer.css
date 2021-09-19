@@ -2,17 +2,4 @@
     margin: 0 auto;
     max-width: 882px;
     min-width: 280px;
-    padding-bottom: 60px;
-}
-
-@media screen and (max-width: 1023px) {
-    .footer {
-        padding: 0 21px 60px;
-    }
-}
-
-@media screen and (max-width: 425px) {
-    .footer {
-        padding: 0 19px 36px;
-    }
 }

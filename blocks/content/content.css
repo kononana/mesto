@@ -2,12 +2,12 @@
 
 @media screen and (max-width: 1023px) {
     .content {
-        padding: 0 21px 0px;
+        padding: 0 auto;
     }
 }
 
-@media screen and(max-width: 425px) {
+@media screen and (max-width: 425px) {
     .content {
-        padding: 38.25px 19px 0px;
+        padding: 0 auto;
     }
 }
