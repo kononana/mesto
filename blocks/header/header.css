@@ -2,14 +2,13 @@
     margin: 0 auto;
     max-width: 880px;
     padding-top: 45px;
-    border-bottom: 1px solid rgba(84, 84, 84, 0.7);
     padding-bottom: 41px;
-    min-width: 280px;
+    border-bottom: 1px solid rgba(84, 84, 84, 0.7);
 }
 
 @media screen and (max-width: 1023px) {
     .header {
-        padding: 40px 21px 0px;
+        padding: 40px 21px 40px;
         ;
     }
 }
@@ -17,6 +16,6 @@
 @media screen and (max-width: 425px) {
     .header {
         max-width: 320px;
-        padding: 28px 19px 0px;
+        padding: 28px 19px 31.6px;
     }
 }

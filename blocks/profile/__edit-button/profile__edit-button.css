@@ -14,6 +14,7 @@
     background-repeat: no-repeat;
     background-position: center;
     margin-top: 20px;
+    outline: 0 none;
 }
 
 @media screen and (max-width: 425px) {
