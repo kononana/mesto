@@ -6,7 +6,7 @@
     width: 24px;
     height: 24px;
     box-sizing: border-box;
-    background-image: url(/images/edit.svg);
+    background-image: url('../../../images/edit.svg');
     cursor: pointer;
     border: 1px solid white;
     align-self: center;

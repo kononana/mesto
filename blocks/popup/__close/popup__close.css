@@ -2,7 +2,7 @@
     width: 32px;
     height: 32px;
     background-color: black;
-    background-image: url(/images/close.svg);
+    background-image: url('../../../images/close.svg');
     background-position: center;
     border: none;
     cursor: poiter;
@@ -23,6 +23,6 @@
         right: 13px;
         width: 20px;
         height: 20px;
-        background-image: url(/images/close_small.svg);
+        background-image: url('../../../images/close_small.svg');
     }
 }
