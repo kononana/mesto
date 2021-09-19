@@ -17,4 +17,4 @@
 
 **Ссылка на проект**
 
-- [Mesto](https://tinypng.com/)
+- [Mesto](https://kononana.github.io/mesto/)
