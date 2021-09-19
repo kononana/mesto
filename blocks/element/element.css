@@ -1,4 +1,4 @@
-    .element {
+.element {
     width: auto;
     border-radius: 10px;
     display: flex;
@@ -15,3 +15,4 @@
         margin: 0 auto;
         max-width: 282px;
     }
+}
