@@ -5,7 +5,6 @@
     flex-direction: column;
     justify-content: center;
     overflow: hidden;
-    width: 100%;
     background-color: white;
     position: relative;
 }
