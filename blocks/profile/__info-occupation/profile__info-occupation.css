@@ -5,18 +5,18 @@
     margin-bottom: 36px;
     font-size: 14px;
     width: 100%;
+    max-width: calc(100% - 50px);
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    max-width: calc(100% - 50px);
 }
 
-@media (min-width: 769px) {
+@media screen and (min-width: 769px) {
     .profile__info-occupation {
         margin-left: 0px;
         max-width: 400px;
         font-size: 18px;
         font-weight: normal;
-        margin-top: 5px;
+        margin-top: 16px;
     }
 }

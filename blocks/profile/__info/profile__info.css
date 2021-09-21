@@ -4,13 +4,13 @@
     flex-wrap: wrap;
     color: white;
     text-align: center;
-    margin-top: 18px;
+    margin-top: 20px;
 }
 
-@media (min-width: 769px) {
+@media screen and (min-width: 769px) {
     .profile__info {
         margin-right: auto;
         text-align: left;
-        margin-top: 0;
+        margin-top: 0px;
     }
 }
