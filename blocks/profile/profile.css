@@ -1,17 +1,27 @@
 .profile {
-    margin: 0 auto;
-    margin-top: 40px;
-    margin-bottom: 46.25px;
-    max-width: 880px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    margin-top: 42px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 36px;
 }
 
-@media screen and (max-width: 720px) {
+@media (min-width: 426px) {
     .profile {
-        flex-direction: column;
-        margin-top: 38.25px;
-        margin-bottom: 0;
+        margin-top: 40px;
+    }
+}
+
+@media (min-width: 769px) {
+    .profile {
+        display: flex;
+        max-width: 882px;
+        align-items: center;
+    }
+}
+
+@media (min-width: 911px) {
+    .profile {
+        margin-left: auto;
+        margin-right: auto;
     }
 }

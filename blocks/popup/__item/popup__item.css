@@ -1,25 +1,20 @@
 .popup__item {
-    margin: 0;
-    width: 358px;
-    height: 27px;
-    border: none;
-    border-bottom: 1px solid rgba(0, 0, 0, .2);
-    margin-left: 36px;
-    margin-top: 30px;
-    font-family: Inter;
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    outline: none;
     font-style: normal;
     font-weight: normal;
     font-size: 14px;
-    line-height: 17px;
-    color: black;
+    line-height: 1.2;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 0;
+    padding-bottom: 14px;
+    margin-top: 30px;
 }
 
-@media screen and (max-width: 767px) {
-    .popup__item {
-        margin: 0 22px 30px;
-        width: 238px;
-    }
-    .popup__item:last-of-type {
-        margin-bottom: 0;
-    }
+.popup__item::placeholder {
+    color: #c4c4c4;
+    font-size: 14px;
 }

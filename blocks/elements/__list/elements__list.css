@@ -1,0 +1,25 @@
+.elements__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    justify-content: center;
+    grid-template-columns: 282px;
+    grid-template-rows: repeat(6, 361px);
+    row-gap: 20px;
+    column-gap: 18px;
+}
+
+@media (min-width: 621px) {
+    .elements__list {
+        grid-template-columns: repeat(2, 282px);
+        grid-template-rows: repeat(3, 361px);
+    }
+}
+
+@media (min-width: 911px) {
+    .elements__list {
+        grid-template-columns: repeat(3, 282px);
+        grid-template-rows: repeat(2, 361px);
+    }
+}

@@ -1,20 +1,17 @@
 .header__logo {
-    padding: 0 0 40px;
-    width: 142px;
-    height: 33px;
-    color: white;
+    margin-left: 28px;
+    width: 103.75px;
 }
 
-@media screen and (max-width: 879px) {
+@media (min-width: 426px) {
     .header__logo {
-        padding: 0 0 31px 27px;
+        width: 142px;
     }
 }
 
-@media screen and (max-width: 425px) {
+@media (min-width: 911px) {
     .header__logo {
-        width: 103.74px;
-        height: 24.4px;
+        margin-left: 0;
     }
 }
 

@@ -1,6 +1,10 @@
  .element__image {
-     max-width: 282px;
+     position: absolute;
+     top: 0;
+     left: 0;
+     width: 282px;
      height: 282px;
-     object-fit: contain;
-     border-radius: 10px 10px 0 0;
+     background-size: cover;
+     border-top-right-radius: 10px;
+     border-top-left-radius: 10px;
  }
