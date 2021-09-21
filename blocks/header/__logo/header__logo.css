@@ -3,13 +3,13 @@
     width: 103.75px;
 }
 
-@media (min-width: 426px) {
+@media screen and (min-width: 426px) {
     .header__logo {
         width: 142px;
     }
 }
 
-@media (min-width: 911px) {
+@media screen and (min-width: 911px) {
     .header__logo {
         margin-left: 0;
     }

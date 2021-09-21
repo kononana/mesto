@@ -1,20 +1,24 @@
 .popup__item {
-    display: block;
-    box-sizing: border-box;
+    margin: 0;
+    padding: 0 0 11px 0;
     width: 100%;
-    outline: none;
+    height: 20px;
+    font-family: 'Inter', Arial, sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 14px;
-    line-height: 1.2;
+    line-height: 17px;
     border: none;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    padding: 0;
-    padding-bottom: 14px;
-    margin-top: 30px;
+    outline: none;
+    border-bottom: 1px solid rgba(0, 0, 0, .2);
+    margin-bottom: 30px;
 }
 
-.popup__item::placeholder {
-    color: #c4c4c4;
-    font-size: 14px;
+.popup__item:hover {
+    border-color: rgba(0, 0, 0, .8);
+    outline: none;
+}
+
+.popup__item:last-of-type {
+    margin-bottom: 45px;
 }
