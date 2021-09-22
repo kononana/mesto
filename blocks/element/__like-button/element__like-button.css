@@ -1,6 +1,5 @@
 .element__like-button {
     background-image: url('../../../images/like.svg');
-    background-color: black;
     color: white;
     display: inline-block;
     padding: 0;
