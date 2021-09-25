@@ -1,13 +1,11 @@
-.element {
-    position: relative;
-    padding-top: 0;
-    padding-bottom: 0;
-    padding-left: 21px;
-    padding-right: 21px;
-    background-color: white;
-    max-width: 282px;
-    min-height: 360px;
-    border-radius: 10px;
-    display: flex;
-    justify-content: space-between;
-}
+ .element {
+     padding-top: 0;
+     padding-bottom: 0;
+     background-color: white;
+     max-width: 282px;
+     min-height: 360px;
+     border-radius: 10px;
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+ }
