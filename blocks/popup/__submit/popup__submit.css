@@ -13,7 +13,6 @@
     cursor: pointer;
     display: block;
     font-size: 14px;
-    margin-bottom: 25px;
 }
 
 .popup__submit:hover {
@@ -22,7 +21,7 @@
 
 @media screen and (min-width: 661px) {
     .popup__submit {
-        margin-bottom: 37px;
         font-size: 18px;
+        line-height: 22px;
     }
 }
