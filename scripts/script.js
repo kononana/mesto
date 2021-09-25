@@ -16,9 +16,6 @@ function popupToggle() {
     if (popup.classList.contains('popup_opened')) {
         nameInput.value = profile_name.textContent
         jobInput.value = profile_job.textContent
-    } else {
-        nameInput.value = '';
-        jobInput.value = '';
     }
 }
 
