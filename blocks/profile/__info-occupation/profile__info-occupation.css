@@ -10,6 +10,7 @@
     white-space: nowrap;
     overflow: hidden;
     font-family: 'Inter', Arial, sans-serif;
+    line-height: 17px;
 }
 
 @media screen and (min-width: 769px) {
@@ -19,5 +20,6 @@
         font-size: 18px;
         font-weight: normal;
         margin-top: 16px;
+        line-height: 22px;
     }
 }
