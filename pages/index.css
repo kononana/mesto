@@ -29,3 +29,7 @@
  @import url(../blocks/element/__description/element__description.css);
  @import url(../blocks/element/__delete-button/element__delete-button.css);
  @import url(../blocks/element/__like-button_active/element__like-button_active.css);
+ @import url(../blocks/popup/__edit-profile/popup__edit-profile.css);
+ @import url(../blocks/popup/__edit-form/popup__edit-form.css);
+ @import url(../blocks/popup/__add-form/popup__add-form.css);
+ @import url(../blocks/popup/__add-card/popup__add-card.css);

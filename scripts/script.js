@@ -1,9 +1,9 @@
-let popup = document.querySelector('.popup')
+let popupEditProfile = document.querySelector('.popup__edit-profile')
 
-let popupCloseBtn = popup.querySelector('.popup__close');
-let formElement = popup.querySelector('.popup__form');
-let nameInput = popup.querySelector('.popup__item_field_name');
-let jobInput = popup.querySelector('.popup__item_field_job');
+let popupEditCloseBtn = popupEditProfile.querySelector('.popup__close');
+let formElement = popupEditProfile.querySelector('.popup__edit-form');
+let nameInput = popupEditProfile.querySelector('.popup__item_field_name');
+let jobInput = popupEditProfile.querySelector('.popup__item_field_job');
 
 /**/
 let popupOpenBtn = document.querySelector('.profile__edit-button');
@@ -12,8 +12,8 @@ let profile_job = document.querySelector('.profile__info-occupation')
 
 
 function popupToggle() {
-    popup.classList.toggle('popup_opened');
-    if (popup.classList.contains('popup_opened')) {
+    popupEditProfile.classList.toggle('popup_opened');
+    if (popupEditProfile.classList.contains('popup_opened')) {
         nameInput.value = profile_name.textContent
         jobInput.value = profile_job.textContent
     }
@@ -28,21 +28,30 @@ function formSubmitHandler(evt) {
 }
 
 popupOpenBtn.addEventListener('click', popupToggle);
-popupCloseBtn.addEventListener('click', popupToggle);
+popupEditCloseBtn.addEventListener('click', popupToggle);
 formElement.addEventListener('submit', formSubmitHandler);
 
 /**/
-let popupOpenCard = document.querySelector('.profile__add-button');
-let cardNameInput = popup.querySelector('.popup__item_field_card-name');
-let cardLinkInput = popup.querySelector('.popup__item_field_card-link');
+let popupAddCard = document.querySelector('.popup__add-card')
+
+let popupAddCloseBtn = popupAddCard.querySelector('.popup__close');
+let formCardElement = popupAddCard.querySelector('.popup__add-form');
+let nameCardInput = popupAddCard.querySelector('.popup__item_field_card-name');
+let linkCardInput = popupAddCard.querySelector('.popup__item_field_card-link');
+let popupAddCardBtn = document.querySelector('.profile__add-button');
+/**/
+
 
 function popupCardToggle() {
-    popup.classList.toggle('popup_opened');
+    popupAddCard.classList.toggle('popup_opened');
 }
-popupOpenCard.addEventListener('click', popupCardToggle)
-popupCloseBtn.addEventListener('click', popupToggle);
+
+popupAddCardBtn.addEventListener('click', popupCardToggle);
+popupAddCloseBtn.addEventListener('click', popupCardToggle);
 
 
+
+/**/
 const initialCards = [{
         name: 'Архыз',
         link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
