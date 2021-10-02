@@ -5,10 +5,12 @@
     background-color: transparent;
     border: none;
     cursor: pointer;
-    outline: 0 none;
+    outline: none;
     background-size: 22px;
     background-repeat: no-repeat;
     background-position: center;
+    padding: 0;
+    background-size: contain;
 }
 
 .element__like-button:hover {
