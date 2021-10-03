@@ -56,13 +56,21 @@
 
     <div class="popup popup__add-card">
         <div class="popup__container">
-            <button type="button" class="popup__close" aria-label=" сlose "></button>
-            <h2 class="popup__title ">Новое место</h2>
-            <form name="card-form " method="POST " action="# " class="popup__form popup__add-form ">
-                <input name="cardName " type="text " placeholder="Название " class="popup__item popup__item_field_card-name ">
-                <input name="cardLink " type="text " placeholder="Ссылка на картинку " class=" popup__item popup__item_field_card-link ">
-                <button type="submit " class="popup__submit ">Создать</button>
+            <button type="button" class="popup__close" aria-label="сlose"></button>
+            <h2 class="popup__title">Новое место</h2>
+            <form name="card-form" method="POST" action="#" class="popup__form popup__add-form ">
+                <input name="cardName" type="text" placeholder="Название" class="popup__item popup__item_field_card-name">
+                <input name="cardLink" type="text" placeholder="Ссылка на картинку" class=" popup__item popup__item_field_card-link">
+                <button type="submit" class="popup__submit">Создать</button>
             </form>
+        </div>
+    </div>
+
+    <div class="popup popup_show_image">
+        <div class="popup__container popup__show-container">
+            <button type="button" class="popup__close" aria-label="сlose"></button>
+            <img class="popup__image" alt="#">
+            <h3 class="popup__image-title"></h3>
         </div>
     </div>
 

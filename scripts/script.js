@@ -10,7 +10,6 @@ let popupOpenBtn = document.querySelector('.profile__edit-button');
 let profile_name = document.querySelector('.profile__info-name')
 let profile_job = document.querySelector('.profile__info-occupation')
 
-
 function popupToggle() {
     popupEditProfile.classList.toggle('popup_opened');
     if (popupEditProfile.classList.contains('popup_opened')) {
@@ -18,7 +17,6 @@ function popupToggle() {
         jobInput.value = profile_job.textContent
     }
 }
-
 
 function formSubmitHandler(evt) {
     evt.preventDefault()
@@ -41,16 +39,12 @@ let linkCardInput = popupAddCard.querySelector('.popup__item_field_card-link');
 let popupAddCardBtn = document.querySelector('.profile__add-button');
 /**/
 
-
 function popupCardToggle() {
     popupAddCard.classList.toggle('popup_opened');
 }
 
-
 popupAddCardBtn.addEventListener('click', popupCardToggle);
 popupAddCloseBtn.addEventListener('click', popupCardToggle);
-
-
 
 /**/
 const initialCards = [{
@@ -81,6 +75,14 @@ const initialCards = [{
 
 
 const cardsList = document.querySelector('.elements__list');
+const popupImage = document.querySelector('.popup_show_image')
+const popupImageCloseBtn = popupImage.querySelector('.popup__close');
+
+function popupImageToggle() {
+    popupImage.classList.toggle('popup_opened');
+}
+
+popupImageCloseBtn.addEventListener('click', popupImageToggle);
 
 /**/
 
@@ -96,23 +98,25 @@ const addCard = function(item) {
     cardElement.querySelector('.element__delete-button').addEventListener('click', function(evt) {
         evt.target.parentElement.remove();
     });
-    cardsList.append(cardElement);
+
+    cardElement.querySelector('.element__image').addEventListener('click', function(evt) {
+        popupImageToggle();
+        popupImage.querySelector('.popup__image').src = evt.target.src;
+        popupImage.querySelector('.popup__image-title').textContent = item.name;
+    });
+
+    cardsList.prepend(cardElement);
 }
 initialCards.forEach(addCard);
 
 
 function formAddCardSubmitHandler(evt) {
     evt.preventDefault()
-    const cardTemplate = document.querySelector('#card-template').content;
-    const cardElement = cardTemplate.cloneNode(true);
-    cardElement.querySelector('.element__title').textContent = nameCardInput.value
-    cardElement.querySelector('.element__image').src = linkCardInput.value
-    cardsList.prepend(cardElement);
+    const newItem = { name: nameCardInput.value, link: linkCardInput.value }
+    addCard(newItem)
     nameCardInput.value = '';
     linkCardInput.value = '';
     popupCardToggle()
 }
-
-
 
 formCardElement.addEventListener('submit', formAddCardSubmitHandler);
