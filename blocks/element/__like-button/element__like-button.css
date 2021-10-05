@@ -6,11 +6,11 @@
     border: none;
     cursor: pointer;
     outline: none;
-    background-size: 22px;
+    background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     padding: 0;
-    background-size: contain;
+    box-sizing: border-box;
 }
 
 .element__like-button:hover {
