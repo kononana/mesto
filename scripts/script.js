@@ -106,7 +106,6 @@ const createCard = function(item) {
 
     return cardElement
 }
-initialCards.forEach(createCard);
 
 /* добалвение массива карточек*/
 
