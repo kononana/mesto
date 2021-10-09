@@ -50,12 +50,12 @@ const popupImage = document.querySelector('.popup_show_image');
 const popupImageCloseBtn = popupImage.querySelector('.popup__close');
 
 /*Отрытие попапа*/
-function openPopup(window) {
-    window.classList.add('popup_opened');
+function openPopup(popup) {
+    popup.classList.add('popup_opened');
 }
 /*Закрытие попапа*/
-function closePopup(window) {
-    window.classList.remove('popup_opened');
+function closePopup(popup) {
+    popup.classList.remove('popup_opened');
 }
 /*дефолтное значение инпутов*/
 function popupEditInputs() {
@@ -84,9 +84,10 @@ popupImageCloseBtn.addEventListener('click', () => closePopup(popupImage));
 const createCard = function(item) {
     const cardTemplate = document.querySelector('#card-template').content;
     const cardElement = cardTemplate.cloneNode(true);
+    const cardPicture = cardElement.querySelector('.element__image');
     cardElement.querySelector('.element__title').textContent = item.name;
-    cardElement.querySelector('.element__image').src = item.link;
-    cardElement.querySelector('.element__image').alt = item.name;
+    cardPicture.src = item.link;
+    cardPicture.alt = item.name;
 
     cardElement.querySelector('.element__like-button').addEventListener('click', function(evt) {
         evt.target.classList.toggle('element__like-button_active');
@@ -98,8 +99,9 @@ const createCard = function(item) {
 
     cardElement.querySelector('.element__image').addEventListener('click', function(evt) {
         openPopup(popupImage);
-        popupImage.querySelector('.popup__image').src = evt.target.src;
-        popupImage.querySelector('.popup__image').alt = item.name;
+        const popupPicture = popupImage.querySelector('.popup__image');
+        popupPicture.src = evt.target.src;
+        popupPicture.alt = item.name;
         popupImage.querySelector('.popup__image-title').textContent = item.name;
 
     });
@@ -110,18 +112,17 @@ const createCard = function(item) {
 /* добалвение массива карточек*/
 
 function addCard(card) {
-    listedCard = card.map(createCard);
-    cardsList.prepend(...listedCard);
+    listedCard = createCard(card);
+    cardsList.prepend(listedCard);
 }
 
-addCard(initialCards);
+initialCards.map(addCard);
 
 /*Добавление новой карточки*/
 
 function formAddCardSubmit(evt) {
     evt.preventDefault()
-    const newItem = createCard({ name: nameCardInput.value, link: linkCardInput.value });
-    cardsList.prepend(newItem);
+    addCard({ name: nameCardInput.value, link: linkCardInput.value });
     nameCardInput.value = '';
     linkCardInput.value = '';
     closePopup(popupAddCard)
