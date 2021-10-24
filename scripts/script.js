@@ -30,8 +30,8 @@ const initialCards = [{
 const popupEditProfile = document.querySelector('.popup_edit-profile')
 const popupEditCloseBtn = popupEditProfile.querySelector('.popup__close');
 const profileForm = popupEditProfile.querySelector('.popup__edit-form');
-const nameInput = popupEditProfile.querySelector('.popup__item_field_name');
-const jobInput = popupEditProfile.querySelector('.popup__item_field_job');
+const nameInput = popupEditProfile.querySelector('.popup__input_field_name');
+const jobInput = popupEditProfile.querySelector('.popup__input_field_job');
 /**/
 
 const popupOpenBtn = document.querySelector('.profile__edit-button');
@@ -41,8 +41,8 @@ const profileJob = document.querySelector('.profile__info-occupation');
 const popupAddCard = document.querySelector('.popup_add-card')
 const popupAddCloseBtn = popupAddCard.querySelector('.popup__close');
 const formCardElement = popupAddCard.querySelector('.popup__add-form');
-const nameCardInput = popupAddCard.querySelector('.popup__item_field_card-name');
-const linkCardInput = popupAddCard.querySelector('.popup__item_field_card-link');
+const nameCardInput = popupAddCard.querySelector('.popup__input_field_card-name');
+const linkCardInput = popupAddCard.querySelector('.popup__input_field_card-link');
 const popupAddCardBtn = document.querySelector('.profile__add-button');
 /**/
 const cardsList = document.querySelector('.elements__list');
@@ -52,11 +52,16 @@ const popupImageCloseBtn = popupImage.querySelector('.popup__close');
 /*Отрытие попапа*/
 function openPopup(popup) {
     popup.classList.add('popup_opened');
+    document.addEventListener("keydown", popupEscHandler);
+    document.addEventListener("click", popupOverlayHandler);
 }
 /*Закрытие попапа*/
 function closePopup(popup) {
     popup.classList.remove('popup_opened');
+    document.removeEventListener("keydown", popupEscHandler);
+    document.removeEventListener("click", popupOverlayHandler);
 }
+
 /*дефолтное значение инпутов*/
 function popupEditInputs() {
     nameInput.value = profileName.textContent
@@ -129,3 +134,18 @@ function formAddCardSubmit(evt) {
 }
 
 formCardElement.addEventListener('submit', formAddCardSubmit);
+
+//esc
+const popupEscHandler = (evt) => {
+    if (evt.key === 'Escape') {
+        const openedPopup = document.querySelector('.popup_opened');
+        closePopup(openedPopup);
+    }
+};
+
+//overlay
+const popupOverlayHandler = (evt) => {
+    if (evt.target.classList.contains("popup")) {
+        closePopup(evt.target);
+    }
+};
