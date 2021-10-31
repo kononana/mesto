@@ -52,14 +52,14 @@ const popupImageCloseBtn = popupImage.querySelector('.popup__close');
 /*Отрытие попапа*/
 function openPopup(popup) {
     popup.classList.add('popup_opened');
-    document.addEventListener("keydown", popupEscHandler);
-    document.addEventListener("click", popupOverlayHandler);
+    document.addEventListener("keydown", EscapeHandle);
+    document.addEventListener("click", OverlayHandle);
 }
 /*Закрытие попапа*/
 function closePopup(popup) {
     popup.classList.remove('popup_opened');
-    document.removeEventListener("keydown", popupEscHandler);
-    document.removeEventListener("click", popupOverlayHandler);
+    document.removeEventListener("keydown", EscapeHandle);
+    document.removeEventListener("click", EscapeHandle);
 }
 
 /*дефолтное значение инпутов*/
@@ -135,16 +135,16 @@ function formAddCardSubmit(evt) {
 
 formCardElement.addEventListener('submit', formAddCardSubmit);
 
-//esc
-const popupEscHandler = (evt) => {
+//Закрытие по esc
+const EscapeHandle = (evt) => {
     if (evt.key === 'Escape') {
         const openedPopup = document.querySelector('.popup_opened');
         closePopup(openedPopup);
     }
 };
 
-//overlay
-const popupOverlayHandler = (evt) => {
+// Закрытие по overlay
+const OverlayHandle = (evt) => {
     if (evt.target.classList.contains("popup")) {
         closePopup(evt.target);
     }
