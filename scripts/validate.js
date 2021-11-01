@@ -3,7 +3,7 @@ const config = {
   inputSelector: '.popup__input',
   buttonSelector: '.popup__submit',
   inputErrorClass: 'popup__input_type_error',
-  inactivaButtonClass: 'popup__submit_disabled',
+  inactivaButtonClass: 'popup__submit_disabled'
 }
 //
 const showInputError = (errorElement, inputElement, config) => {
@@ -12,8 +12,9 @@ const showInputError = (errorElement, inputElement, config) => {
 }
 
 const hideInputError = (errorElement, inputElement, config) => {
-  inputElement.classList.remove(config.inputErrorClass);
   errorElement.textContent = '';
+  inputElement.classList.remove(config.inputErrorClass);
+
 }
 
 const checkInputValidity = (formElement, inputElement,config) => {

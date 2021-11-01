@@ -44,22 +44,24 @@ const formCardElement = popupAddCard.querySelector('.popup__add-form');
 const nameCardInput = popupAddCard.querySelector('.popup__input_field_card-name');
 const linkCardInput = popupAddCard.querySelector('.popup__input_field_card-link');
 const popupAddCardBtn = document.querySelector('.profile__add-button');
+
 /**/
 const cardsList = document.querySelector('.elements__list');
 const popupImage = document.querySelector('.popup_show_image');
 const popupImageCloseBtn = popupImage.querySelector('.popup__close');
 
+
 /*Отрытие попапа*/
 function openPopup(popup) {
     popup.classList.add('popup_opened');
-    document.addEventListener("keydown", EscapeHandle);
-    document.addEventListener("click", OverlayHandle);
+    document.addEventListener("keydown", escapeHandle);
+    document.addEventListener("click", overlayHandle);
 }
 /*Закрытие попапа*/
 function closePopup(popup) {
     popup.classList.remove('popup_opened');
-    document.removeEventListener("keydown", EscapeHandle);
-    document.removeEventListener("click", EscapeHandle);
+    document.removeEventListener("keydown", escapeHandle);
+    document.removeEventListener("click", escapeHandle);
 }
 
 /*дефолтное значение инпутов*/
@@ -72,6 +74,7 @@ function submitProfileForm(evt) {
     evt.preventDefault()
     profileName.textContent = nameInput.value
     profileJob.textContent = jobInput.value
+    disableSubmit(popupEditProfile)
     closePopup(popupEditProfile)
 }
 
@@ -123,20 +126,30 @@ function addCard(card) {
 
 initialCards.map(addCard);
 
+/* функция дизактивации кнопки*/
+
+function disableSubmit(formElement) {
+  const submitBtn = formElement.querySelector('.popup__submit')
+  submitBtn.classList.add('popup__submit_disabled');
+  submitBtn.disabled = 'disabled';
+}
+
 /*Добавление новой карточки*/
 
 function formAddCardSubmit(evt) {
     evt.preventDefault()
     addCard({ name: nameCardInput.value, link: linkCardInput.value });
-    nameCardInput.value = '';
-    linkCardInput.value = '';
+    evt.currentTarget.reset();
+    disableSubmit(popupAddCard)
     closePopup(popupAddCard)
+
+
 }
 
 formCardElement.addEventListener('submit', formAddCardSubmit);
 
 //Закрытие по esc
-const EscapeHandle = (evt) => {
+const escapeHandle = (evt) => {
     if (evt.key === 'Escape') {
         const openedPopup = document.querySelector('.popup_opened');
         closePopup(openedPopup);
@@ -144,8 +157,10 @@ const EscapeHandle = (evt) => {
 };
 
 // Закрытие по overlay
-const OverlayHandle = (evt) => {
+const overlayHandle = (evt) => {
     if (evt.target.classList.contains("popup")) {
         closePopup(evt.target);
     }
 };
+
+
