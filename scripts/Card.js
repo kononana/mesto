@@ -1,7 +1,7 @@
 export default class Card {
     constructor(data, cardSelector, openPhoto) {
         this._name = data.name;
-        this._image = data.link;
+        this._link = data.link;
         this._cardSelector = cardSelector;
         this._openPhoto = openPhoto;
 
