@@ -38,7 +38,7 @@
                 <input name="name" type="text" id="name-input" placeholder="Имя" class="popup__input popup__input_field_name" required minlength="2" maxlength="40">
                 <span class="popup__error" id="name-input-error"></span>
                 <input name="job" type="text" id="job-input" placeholder="род деятельности" class="popup__input popup__input_field_job" required minlength="2" maxlength="200">
-                <span class="popup__error" id ="job-input-error"></span>
+                <span class="popup__error" id="job-input-error"></span>
                 <button type="submit" class="popup__submit">Сохранить</button>
             </form>
         </div>
@@ -46,7 +46,7 @@
     <template id="card-template">
         <li class="element">
             <button type="button" class="element__delete-button"></button>
-            <img src="#" class="element__image" alt="#">
+            <img src="" class="element__image" alt="">
             <div class="element__description">
                 <h2 class="element__title"></h2>
                 <button type="button" class="element__like-button"></button>
@@ -74,7 +74,9 @@
         </div>
     </div>
     <script src="./scripts/validate.js"></script>
-    <script src="./scripts/script.js"></script>
+    <script type="module" src="./scripts/script.js"></script>
+
+
 
 </body>
 
