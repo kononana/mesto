@@ -86,7 +86,6 @@ function submitProfileForm(evt) {
     evt.preventDefault()
     profileName.textContent = nameInput.value
     profileJob.textContent = jobInput.value
-        /*disableSubmit(popupEditProfile)*/
     closePopup(popupEditProfile)
 }
 
@@ -126,14 +125,6 @@ function addCard(item) {
 
 initialCards.map(addCard);
 
-/* функция дизактивации кнопки
-
-function disableSubmit(formElement) {
-    const submitBtn = formElement.querySelector('.popup__submit')
-    submitBtn.classList.add('popup__submit_disabled');
-    submitBtn.disabled = 'disabled';
-}
-*/
 
 /*Добавление новой карточки*/
 
@@ -141,7 +132,6 @@ function formAddCardSubmit(evt) {
     evt.preventDefault()
     addCard({ name: nameCardInput.value, link: linkCardInput.value });
     evt.currentTarget.reset();
-    /*disableSubmit(popupAddCard)*/
     closePopup(popupAddCard)
 }
 formCardElement.addEventListener('submit', formAddCardSubmit);
