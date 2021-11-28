@@ -1,9 +1,9 @@
 export default class Card {
-    constructor(data, cardSelector, openPhoto) {
+    constructor(data, cardSelector, openFullScreenImage) {
         this._name = data.name;
         this._link = data.link;
         this._cardSelector = cardSelector;
-        this._openPhoto = openPhoto;
+        this._openFullScreenImage = openFullScreenImage;
 
     }
     _getTamplate() {
@@ -44,7 +44,7 @@ export default class Card {
         })
 
         this._elementImage.addEventListener('click', () => {
-            this._openPhoto(this._link, this._name);
+            this._openFullScreenImage(this._link, this._name);
         })
     }
 }
