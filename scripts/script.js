@@ -125,18 +125,12 @@ function addCard(item) {
 
 initialCards.map(addCard);
 
-/* функция дизактивации кнопки*/
+/* валидация форм*/
 
-function disableSubmit(formElement) {
-
-    const submitBtn = formElement.querySelector('.popup__submit')
-
-    submitBtn.classList.add('popup__submit_disabled');
-
-    submitBtn.disabled = 'disabled';
-
-}
-
+const editProfileValidation = new FormValidator(config, popupEditProfile);
+editProfileValidation.enableValidation();
+const addCardValidation = new FormValidator(config, popupAddCard);
+addCardValidation.enableValidation();
 
 /*Добавление новой карточки*/
 
@@ -144,7 +138,6 @@ function formAddCardSubmit(evt) {
     evt.preventDefault()
     addCard({ name: nameCardInput.value, link: linkCardInput.value });
     evt.currentTarget.reset();
-    disableSubmit(popupAddCard)
     closePopup(popupAddCard)
 }
 formCardElement.addEventListener('submit', formAddCardSubmit);
@@ -163,9 +156,3 @@ const overlayHandle = (evt) => {
         closePopup(evt.target);
     }
 };
-
-
-const editProfileValidation = new FormValidator(config, popupEditProfile);
-editProfileValidation.enableValidation();
-const addCardValidation = new FormValidator(config, popupAddCard);
-addCardValidation.enableValidation();
