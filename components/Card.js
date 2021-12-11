@@ -1,9 +1,10 @@
 export default class Card {
-    constructor(data, cardSelector, openFullScreenImage) {
+    constructor(data, cardSelector, handleCardClic, openFullScreenImage) {
         this._name = data.name;
         this._link = data.link;
         this._cardSelector = cardSelector;
         this._openFullScreenImage = openFullScreenImage;
+        this._handleCardClic = handleCardClic
 
     }
     _getTamplate() {
@@ -18,19 +19,19 @@ export default class Card {
     generateCard() {
         this._cardTemplate = this._getTamplate();
         this._elementName = this._cardTemplate.querySelector('.element__title');
-        this._elementImage = this._cardTemplate.querySelector('.element__image')
+        this._elementImage = this._cardTemplate.querySelector('.element__image');
         this._elementName.textContent = this._name;
         this._elementImage.src = this._link;
         this._elementImage.alt = this._name;
         this._setEventListeners();
-
         return this._cardTemplate;
     }
 
-    /* */
+
     _likeCard() {
         this._cardTemplate.querySelector('.element__like-button').classList.toggle('element__like-button_active');
     }
+
     _deleteCard() {
         this._cardTemplate.remove();
     }
