@@ -127,14 +127,6 @@ const itemsList = new Section({
 itemsList.renderItems();
 
 
-
-
-
-
-
-
-
-
 // function disableSubmit(formElement) {
 
 //     const submitBtn = formElement.querySelector('.popup__submit')
