@@ -87,6 +87,16 @@ function addCard(item) {
 initialCards.forEach(addCard);
 
 
+function disableSubmit(formElement) {
+
+    const submitBtn = formElement.querySelector('.popup__submit')
+
+    submitBtn.classList.add('popup__submit_disabled');
+
+    submitBtn.disabled = 'disabled';
+
+}
+
 /*Добавление новой карточки*/
 
 function formAddCardSubmit(evt) {
