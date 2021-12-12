@@ -33,7 +33,7 @@ editProfileValidation.enableValidation();
 const addCardValidation = new FormValidator(config, popupAddCard);
 addCardValidation.enableValidation();
 
-/
+
 /*Редактирование профиля пользователя*/
 const userProfile = new UserInfo({
     name: profileName,
