@@ -4,8 +4,9 @@ const initialCards = [{
         link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
     },
     {
-        name: 'Новокузнецк',
-        link: './images/Верхоянск.jpg'
+        name: 'Южный Урал',
+        link: 'https://yaturisto.ru/wp-content/gallery/id-34-gory-juzhnojj-sibiri/id-34-gory-juzhnojj-sibiri-belukha-2.jpg'
+
     },
     {
         name: 'Холмогорский район',
