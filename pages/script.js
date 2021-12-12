@@ -33,21 +33,7 @@ editProfileValidation.enableValidation();
 const addCardValidation = new FormValidator(config, popupAddCard);
 addCardValidation.enableValidation();
 
-// /*Отрытие попапа*/
-// function openPopup(popup) {
-//     popup.classList.add('popup_opened');
-//     document.addEventListener("keydown", escapeHandle);
-//     document.addEventListener("click", overlayHandle);
-// }
-// /*Закрытие попапа*/
-// function closePopup(popup) {
-//     popup.classList.remove('popup_opened');
-//     document.removeEventListener("keydown", escapeHandle);
-//     document.removeEventListener("click", escapeHandle);
-
-/*Создание экз. класса для рендеринга*/
-
-
+/
 /*Редактирование профиля пользователя*/
 const userProfile = new UserInfo({
     name: profileName,
@@ -72,27 +58,6 @@ popupEditForm.setEventListener();
 
 popupOpenBtn.addEventListener('click', openProfileEdition);
 
-
-// /*дефолтное значение инпутов*/
-// function popupEditInputs() {
-//     nameInput.value = profileName.textContent
-//     jobInput.value = profileJob.textContent
-// }
-
-// function submitProfileForm(evt) {
-//     evt.preventDefault()
-//     profileName.textContent = nameInput.value
-//     profileJob.textContent = jobInput.value
-//     closePopup(popupEditProfile)
-// }
-// popupOpenBtn.addEventListener('click', () => openPopup(popupEditProfile), popupEditInputs());
-// popupEditCloseBtn.addEventListener('click', () => closePopup(popupEditProfile));
-// profileForm.addEventListener('submit', submitProfileForm);
-
-// popupAddCardBtn.addEventListener('click', () => openPopup(popupAddCard));
-// popupAddCloseBtn.addEventListener('click', () => closePopup(popupAddCard));
-// popupImageCloseBtn.addEventListener('click', () => closePopup(popupImage));
-
 /*Попап для добаления карточек*/
 
 const fullScreeImage = new PopupWithImage(popupImage)
@@ -103,7 +68,7 @@ function openAddCardPopup() {
 }
 popupAddCardBtn.addEventListener('click', openAddCardPopup);
 
-/* создание карточки*/
+/* создание  карточки*/
 const createCard = (item) => {
     const card = new Card({
         data: item,
@@ -127,16 +92,6 @@ const itemsList = new Section({
 itemsList.renderItems();
 
 
-// function disableSubmit(formElement) {
-
-//     const submitBtn = formElement.querySelector('.popup__submit')
-
-//     submitBtn.classList.add('popup__submit_disabled');
-
-//     submitBtn.disabled = 'disabled';
-
-// }
-
 /*Добавление новой карточки*/
 
 const popupNewCardSubmit = new PopupWithForm({
@@ -148,25 +103,3 @@ const popupNewCardSubmit = new PopupWithForm({
     }
 })
 popupNewCardSubmit.setEventListener();
-// function formAddCardSubmit(evt) {
-//     evt.preventDefault()
-//     addCard({ name: nameCardInput.value, link: linkCardInput.value });
-//     evt.currentTarget.reset();
-//     closePopup(popupAddCard)
-// }
-// formCardElement.addEventListener('submit', formAddCardSubmit);
-
-//Закрытие по esc
-// const escapeHandle = (evt) => {
-//     if (evt.key === 'Escape') {
-//         const openedPopup = document.querySelector('.popup_opened');
-//         closePopup(openedPopup);
-//     }
-// };
-
-// Закрытие по overlay
-// const overlayHandle = (evt) => {
-//     if (evt.target.classList.contains("popup")) {
-//         closePopup(evt.target);
-//     }
-// };

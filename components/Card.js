@@ -35,14 +35,6 @@ export default class Card {
         this._cardTemplate.remove();
     }
 
-    // _openFullImage() {
-    //     this._popupImage = document.querySelector('.popup_show_image');
-    //     this._popupImage.querySelector('.popup__image').src = this._link
-    //     this._popupImage.querySelector('.popup__image').alt = this._name
-    //     this._popupImage.querySelector('.popup__image-title').textContent = this._name
-    //     this._handleCardClick(this._popupImage)
-    // }
-
 
     _setEventListeners() {
         this._cardTemplate.querySelector('.element__like-button').addEventListener('click', () => {
