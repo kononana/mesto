@@ -1,12 +1,13 @@
 import "./index.css"
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
-import { initialCards } from "./constants.js";
-import { config } from "./constants.js";
+import { initialCards } from "../utils/constants.js";
+import { config } from "../utils/constants.js";
 import UserInfo from "../components/UserInfo.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
+import { data } from "autoprefixer";
 
 /*Объявление переменных*/
 const popupEditProfile = document.querySelector('.popup_edit-profile')
@@ -29,40 +30,41 @@ const popupImageCloseBtn = popupImage.querySelector('.popup__close');
 
 /* валидация форм*/
 
-const editProfileValidation = new FormValidator(config, popupEditProfile);
+const editProfileValidation = new FormValidator(config, profileForm);
 editProfileValidation.enableValidation();
-const addCardValidation = new FormValidator(config, popupAddCard);
+const addCardValidation = new FormValidator(config, formCardElement);
 addCardValidation.enableValidation();
 
 
 /*Редактирование профиля пользователя*/
 const userProfile = new UserInfo({
-    name: profileName,
-    info: profileJob
+  nameUser: profileName,
+  aboutUser: profileJob
 })
 
 const openProfileEdition = () => {
-    const userInfo = userProfile.getUserInfo()
-    nameInput.value = userInfo.name
-    jobInput.value = userInfo.info
     popupEditForm.open()
+    const getInfo = userProfile.getUserInfo()
+    nameInput.value = getInfo.name
+    jobInput.value = getInfo.about
 
 }
-const popupEditForm = new PopupWithForm({
-    popup: popupEditProfile,
-    submitForm: () => {
-        userProfile.setUserInfo(nameInput, jobInput)
+
+const popupEditForm = new PopupWithForm(popupEditProfile,{
+    submitForm: (data) => {
+        userProfile.setUserInfo(data)
         popupEditForm.close()
     }
 })
-popupEditForm.setEventListener();
+
+popupEditForm.setEventListeners();
 
 popupOpenBtn.addEventListener('click', openProfileEdition);
 
 /*Попап для добаления карточек*/
 
 const fullScreeImage = new PopupWithImage(popupImage)
-fullScreeImage.setEventListener()
+fullScreeImage.setEventListeners()
 
 function openAddCardPopup() {
     popupNewCardSubmit.open()
@@ -95,12 +97,11 @@ itemsList.renderItems();
 
 /*Добавление новой карточки*/
 
-const popupNewCardSubmit = new PopupWithForm({
-    popup: popupAddCard,
+const popupNewCardSubmit = new PopupWithForm(popupAddCard,{
     submitForm: () => {
         const newCard = createCard({ name: nameCardInput.value, link: linkCardInput.value })
         itemsList.addNewItem(newCard)
         popupNewCardSubmit.close()
     }
 })
-popupNewCardSubmit.setEventListener();
+popupNewCardSubmit.setEventListeners();
