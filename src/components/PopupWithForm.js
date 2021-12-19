@@ -1,34 +1,35 @@
-import Popup from "./Popup.js";
+import  Popup  from './Popup.js';
 export default class PopupWithForm extends Popup {
-    constructor(popup, {
-        submitForm
-    }) {
-        super(popup)
-        this._element = popup
-        this._form = this._element.querySelector('.popup__form')
-        this._submitForm = submitForm
-
+    constructor(popup, { submitForm }) {
+        super(popup);
+        this._submitForm = submitForm;
+        this._form = this._popup.querySelector('.popup__form');
+        this._inputsList = Array.from(this._form.querySelectorAll('.popup__input'));
     }
+
     _getInputValues() {
-        this._inputList = this._form.querySelectorAll('.popup__input')
-        this._values = {}
-        this._inputList.forEach(input => {
-            this._values[input.name] = input.value
+        this._inputValue = {}
+        this._inputsList.forEach((input) => {
+            this._inputValue[input.id] = input.value;
 
         });
-        return this._values
+        console.log("значение инпутов:", this._inputValue)
+
+        return this._inputValue;
     }
 
     setEventListeners() {
-        super.setEventListeners()
-        this._form.addEventListener('submit', (evt) => {
-            evt.preventDefault()
-            this._submitForm(this._getInputValues())
-        })
+        super.setEventListeners();
+        this._popup.addEventListener('submit', (event) => {
+            event.preventDefault();
+            this._submitForm(this._getInputValues());
+            this.close();
+        });
     }
 
     close() {
         super.close();
-        this._form.reset()
+        this._form.reset();
     }
+
 }

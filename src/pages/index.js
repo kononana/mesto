@@ -36,24 +36,19 @@ addCardValidation.enableValidation();
 
 
 /*Редактирование профиля пользователя*/
-const userProfile = new UserInfo({
-    name: profileName,
-    info: profileJob
-})
+
+const profileInfo = new UserInfo({ nameUser: profileName, aboutUser:  profileJob });
 
 const openProfileEdition = () => {
-    const userInfo = userProfile.getUserInfo()
+    const userInfo = profileInfo.getUserInfo()
     nameInput.value = userInfo.name
-    jobInput.value = userInfo.info
+    jobInput.value = userInfo.about
     editProfileValidation.clearErrors();
     popupEditForm.open()
-
-
 }
 const popupEditForm = new PopupWithForm(popupEditProfile,{
     submitForm: (data) => {
-        userProfile.setUserInfo(data)
-        popupEditForm.close()
+        profileInfo.setUserInfo(data)
     }
 })
 popupEditForm.setEventListeners();
@@ -99,10 +94,11 @@ itemsList.renderItems();
 /*Добавление новой карточки*/
 
 const popupNewCardSubmit = new PopupWithForm(popupAddCard,{
-    submitForm: (item) => {
-        const newCard = createCard(item)
+    submitForm: (data) => {
+        const newCard = createCard(data)
         itemsList.addNewItem(newCard)
         popupNewCardSubmit.close()
     }
 })
+
 popupNewCardSubmit.setEventListeners();
