@@ -7,9 +7,8 @@ export default class UserInfo {
         return ({ name: this._name.textContent, info: this._info.textContent });
     }
 
-
-    setUserInfo(nameInput, jobInput) {
-        this._name.textContent = nameInput.value
-        this._info.textContent = jobInput.value
+    setUserInfo(data) {
+        this._name.textContent = data.name
+        this._info.textContent = data.info
     }
 }

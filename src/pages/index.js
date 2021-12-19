@@ -29,9 +29,9 @@ const popupImageCloseBtn = popupImage.querySelector('.popup__close');
 
 /* валидация форм*/
 
-const editProfileValidation = new FormValidator(config, popupEditProfile);
+const editProfileValidation = new FormValidator(config, profileForm);
 editProfileValidation.enableValidation();
-const addCardValidation = new FormValidator(config, popupAddCard);
+const addCardValidation = new FormValidator(config, formCardElement);
 addCardValidation.enableValidation();
 
 
@@ -45,27 +45,30 @@ const openProfileEdition = () => {
     const userInfo = userProfile.getUserInfo()
     nameInput.value = userInfo.name
     jobInput.value = userInfo.info
+    editProfileValidation.clearErrors();
     popupEditForm.open()
 
+
 }
-const popupEditForm = new PopupWithForm({
-    popup: popupEditProfile,
-    submitForm: () => {
-        userProfile.setUserInfo(nameInput, jobInput)
+const popupEditForm = new PopupWithForm(popupEditProfile,{
+    submitForm: (data) => {
+        userProfile.setUserInfo(data)
         popupEditForm.close()
     }
 })
-popupEditForm.setEventListener();
+popupEditForm.setEventListeners();
 
 popupOpenBtn.addEventListener('click', openProfileEdition);
 
 /*Попап для добаления карточек*/
 
 const fullScreeImage = new PopupWithImage(popupImage)
-fullScreeImage.setEventListener()
+fullScreeImage.setEventListeners()
 
 function openAddCardPopup() {
+    addCardValidation.clearErrors();
     popupNewCardSubmit.open()
+    
 }
 popupAddCardBtn.addEventListener('click', openAddCardPopup);
 
@@ -95,12 +98,11 @@ itemsList.renderItems();
 
 /*Добавление новой карточки*/
 
-const popupNewCardSubmit = new PopupWithForm({
-    popup: popupAddCard,
-    submitForm: () => {
-        const newCard = createCard({ name: nameCardInput.value, link: linkCardInput.value })
+const popupNewCardSubmit = new PopupWithForm(popupAddCard,{
+    submitForm: (item) => {
+        const newCard = createCard(item)
         itemsList.addNewItem(newCard)
         popupNewCardSubmit.close()
     }
 })
-popupNewCardSubmit.setEventListener();
+popupNewCardSubmit.setEventListeners();
