@@ -100,7 +100,7 @@ itemsList.renderItems();
 const popupNewCardSubmit = new PopupWithForm({
     popup: popupAddCard,
     submitForm: (data) => {
-        const newCard = createCard({name: data.cardName, link: data.cardLink})
+        const newCard = createCard({name: data.title, link: data.link})
         itemsList.addNewItem(newCard)
         popupNewCardSubmit.close()
     }
