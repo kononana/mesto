@@ -14,7 +14,6 @@ export default class Card {
 
         return cardTemplate;
     }
-
     generateCard() {
         this._cardTemplate = this._getTamplate();
         this._elementName = this._cardTemplate.querySelector('.element__title');
@@ -49,3 +48,4 @@ export default class Card {
         })
     }
 }
+
