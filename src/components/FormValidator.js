@@ -60,7 +60,7 @@ export default class FormValidator {
           });
       });
   };
-
+// Очистка полей от ошибок
   clearErrors() {
     this._inputList.forEach(inputElement => {
             if (inputElement.classList.contains(this._inputErrorClass)) {
