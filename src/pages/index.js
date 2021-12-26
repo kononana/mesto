@@ -7,6 +7,7 @@ import UserInfo from "../components/UserInfo.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
+import Api from "../components/Api.js";
 
 /*Объявление переменных*/
 const popupEditProfile = document.querySelector('.popup_edit-profile')
@@ -26,6 +27,22 @@ const popupAddCardBtn = document.querySelector('.profile__add-button');
 const cardsList = document.querySelector('.elements__list');
 const popupImage = document.querySelector('.popup_show_image');
 const popupImageCloseBtn = popupImage.querySelector('.popup__close');
+const popupDeleteCard = document.querySelector('.popup_type_delete')
+const popupAvatar = document.querySelector('.popup_type_avatar')
+const avatarForm  = popupAvatar.querySelector('.popup__form')
+const avatarInput = popupAvatar.querySelector('.popup__input_type_avatar')
+const profileAvatar = document.querySelector('.profile__avatar')
+const avatarOpenBtn = document.querySelector('.profile__edit-avatar')
+
+
+/*API*/
+const api = new Api({
+    url: 'https://mesto.nomoreparties.co/v1/cohort-32/',
+    headers: {
+        'Content-Type': 'application/json',
+        authorization: 'c8ac5435-19ae-40ca-be01-a8b8eb11b753'
+    }
+}) 
 
 /* валидация форм*/
 
@@ -33,11 +50,37 @@ const editProfileValidation = new FormValidator(config, profileForm);
 editProfileValidation.enableValidation();
 const addCardValidation = new FormValidator(config, formCardElement);
 addCardValidation.enableValidation();
+const avatarValidation = new FormValidator(config,avatarForm);
+avatarValidation.enableValidation();
+
+/*Редактирование аватара*/
+const popupChangeAvatar = new PopupWithForm({
+    popup: popupAvatar,
+    submitForm:(data) => {
+        api.editAvatar({
+            avatar: data.avatar
+        })
+        .then((data) => {
+            userProfile.setAvatar(data)
+            popupChangeAvatar.close()
+        })
+        .catch((err) => {console.log(`${err}`)})
+    }
+})
+popupChangeAvatar.setEventListener()
+
+const popupAvatarOpen = () => {
+    avatarValidation.clearErrors()
+    popupChangeAvatar.open()
+}
+
+avatarOpenBtn.addEventListener('click', popupAvatarOpen)
 
 /*Редактирование профиля пользователя*/
 const userProfile = new UserInfo({
     name: profileName,
-    job: profileJob
+    job: profileJob,
+    avatar: profileAvatar
 })
 
 const openProfileEdition = () => {
