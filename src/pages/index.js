@@ -12,7 +12,7 @@ import Api from "../components/Api.js";
 /*Объявление переменных*/
 const popupEditProfile = document.querySelector('.popup_edit-profile')
 const popupEditCloseBtn = popupEditProfile.querySelector('.popup__close');
-const profileForm = popupEditProfile.querySelector('.popup__form');
+const profileForm = popupEditProfile.querySelector('.popup__corn');
 const nameInput = popupEditProfile.querySelector('.popup__input_field_name');
 const jobInput = popupEditProfile.querySelector('.popup__input_field_job');
 const popupOpenBtn = document.querySelector('.profile__edit-button');
@@ -20,7 +20,7 @@ const profileName = document.querySelector('.profile__info-name');
 const profileJob = document.querySelector('.profile__info-occupation');
 const popupAddCard = document.querySelector('.popup_add-card')
 const popupAddCloseBtn = popupAddCard.querySelector('.popup__close');
-const formCardElement = popupAddCard.querySelector('.popup__form');
+const formCardElement = popupAddCard.querySelector('.popup__corn');
 const nameCardInput = popupAddCard.querySelector('.popup__input_field_card-name');
 const linkCardInput = popupAddCard.querySelector('.popup__input_field_card-link');
 const popupAddCardBtn = document.querySelector('.profile__add-button');
@@ -29,7 +29,7 @@ const popupImage = document.querySelector('.popup_show_image');
 const popupImageCloseBtn = popupImage.querySelector('.popup__close');
 const popupDeleteCard = document.querySelector('.popup_type_delete')
 const popupAvatar = document.querySelector('.popup_type_avatar')
-const avatarForm  = popupAvatar.querySelector('.popup__form')
+const avatarForm  = popupAvatar.querySelector('.popup__corn')
 const avatarInput = popupAvatar.querySelector('.popup__input_type_avatar')
 const profileAvatar = document.querySelector('.profile__avatar')
 const avatarOpenBtn = document.querySelector('.profile__edit-avatar')
@@ -54,52 +54,74 @@ const avatarValidation = new FormValidator(config,avatarForm);
 avatarValidation.enableValidation();
 
 /*Редактирование аватара*/
-const popupChangeAvatar = new PopupWithForm({
-    popup: popupAvatar,
-    submitForm:(data) => {
-        api.editAvatar({
-            avatar: data.avatar
-        })
-        .then((data) => {
-            userProfile.setAvatar(data)
-            popupChangeAvatar.close()
-        })
-        .catch((err) => {console.log(`${err}`)})
+const popupAvatarWithForm = new PopupWithForm ({
+    popupSelector: popupAvatar,
+    handleFormSubmit: (data) => {
+      api.editAvatar({
+        avatar: data.avatar
+      })
+      .then((data) => {
+        userInfoProfile.setUserAvatar(data);
+      })
+      .then(() => {
+        popupAvatarWithForm.close()
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      })
     }
-})
-popupChangeAvatar.setEventListener()
+  })
+   
+  popupAvatarWithForm.setEventListener();
+  
+  // Открытие попапа редактирования аватара
+  const popupAvatarOpen = () => {
+    avatarValidation.clearErrors();
+    popupAvatarWithForm.open()
+  }
+  
+  avatarOpenBtn.addEventListener('click', popupAvatarOpen);
+  
+  
 
-const popupAvatarOpen = () => {
-    avatarValidation.clearErrors()
-    popupChangeAvatar.open()
-}
-
-avatarOpenBtn.addEventListener('click', popupAvatarOpen)
-
+// avatarOpenBtn.addEventListener('click', popupAvatarOpen)
+const userInfoProfile = new UserInfo({
+    userSelector: profileName,
+    infoSelector: profileJob,
+    avatarSelector: profileAvatar
+  });
+  
+  //console.log(userInfoProfile)
 /*Редактирование профиля пользователя*/
-const userProfile = new UserInfo({
-    name: profileName,
-    job: profileJob,
-    avatar: profileAvatar
-})
+const popupProfileWithForm = new PopupWithForm ({
+    popupSelector: popupEditProfile,
+    handleFormSubmit: (data) => { 
+        // Добавление новой информации на страницу  + закрытие
+        api.editUserInfo({
+          name: data.name,
+          about: data.about,
+        }) 
+          .then((data) => {
+            userInfoProfile.setUserInfo(data);
+             popupProfileWithForm.close();
+          })
+          .catch((err) => {
+            console.log(`Ошибка: ${err}`);
+          })
+    }
+  });
+  
+    popupProfileWithForm.setEventListener();
+
 
 const openProfileEdition = () => {
-    const userInfo = userProfile.getUserInfo()
-    nameInput.value = userInfo.name
-    jobInput.value = userInfo.job
+    const getUserInfo = userInfoProfile.getUserInfo();
+    nameInput.value = getUserInfo.name
+    jobInput.value = getUserInfo.about
     editProfileValidation.clearErrors();
-    popupEditForm.open()
+    popupProfileWithForm.open()
 }
 
-
-const popupEditForm = new PopupWithForm({
-    popup: popupEditProfile,
-    submitForm: (data) => {
-        userProfile.setUserInfo(data)
-        popupEditForm.close()
-    }
-})
-popupEditForm.setEventListener();
 
 popupOpenBtn.addEventListener('click', openProfileEdition);
 
@@ -150,6 +172,16 @@ const popupNewCardSubmit = new PopupWithForm({
 
 })
     
-
-
 popupNewCardSubmit.setEventListener();
+
+// Получаем данные с сервера (Данные профиля + данные карточек)
+Promise.all(api.getUserInfo())
+  .then((user) => {
+    const userId = user._id;
+    userProfile.setUserInfo(user);
+    userProfile.setAvatar(user);
+
+  })
+  .catch((err) => {
+    console.log(`Ошибка: ${err}`);
+  })

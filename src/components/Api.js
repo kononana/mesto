@@ -1,126 +1,65 @@
 export default class Api {
-    constructor({url, headers}) {
-        this._url = url;
-        this._headers = headers
-    }
-    //receive data about current user
+  constructor (config) { 
+    this._url = config.url;
+    this._headers = config.headers; 
+  }
 
-    getUserInfo() { 
-        return fetch(`${this._url}/users/me`, {
-          headers: this._headers
-        })
-        .then((res) => {
-            if (res.ok) {
-              return res.json();
-            }
-            return Promise.reject(`Что-то пошло не так: ${res.status}`);
-          })
-    }
+  // отдельно выносим проверку, чтоб не писать ее каждый раз
+  _checkLineOk(responce) {
+    if (responce.ok) {  // если у объекта responce поле ок = истина
+      return responce.json(); // тогла возвращаем реальные данные (если не написать return в следующий промис не передадутся данные)
+    } return Promise.reject(`Ошибка: ${res} `) // если статус не ок, возвращаем Promise.rejec (переводим в значение rejected (отклонено))
+  }
 
-//receive card-list from server
-    getInitialCards() {
-        return fetch(`${this._url}/cards`, {
-            headers: this._headers
-        })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Что-то пошло не так: ${res.status}`);
-            })
-    }
-//edit user profile
-    editUSerProfile(data) {
-        return fetch(`${this._url}/users/me`, {
-           method: "PATCH",
-           headers: this._headers,
-           body: JSON.stringify({
-               name: data.name,
-               about: data.job
-           }) 
-        })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Что-то пошло не так: ${res.status}`);
-            })
-    }
+  // получение данных профиля 
+  getUserInfo() { // усли fetch ничего не возвращает, по умолчанию он вернет underfined
+    return fetch(`${this._url}users/me`, { // первый аргумент - куда направляем запрос
+      // второй аргумент - объект с настройками
+      method: "GET", // поумолчанию метод всегда GET, но лучше указывать, что б было явно видно
+      headers: this._headers
+    })
+    .then((responce) => {
+      return this._checkLineOk(responce)
+    }) //если сервер хоть чем-то ответил (даже статус 400), значит успешно, если сервер ничем не ответил, тогда fetch перейдет в значение rejected и мы перейдем в блок catch
+  }
 
-    //edit avatar
-    editAvatar(data) {  
-        return fetch(`${this._url}users/me/avatar`, { 
-          method: "PATCH", 
-          headers: this._headers,
-          body: JSON.stringify({
-            avatar: data.avatar
-          })
-        }) 
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Что-то пошло не так: ${res.status}`);
-            })
-    }
-    // Add new card to the Server
-  addNewCards(data) { 
+  // получение карточек 
+  getInitialCards() { 
     return fetch(`${this._url}cards`, { 
-      method: "POST", 
+      method: "GET",  
+      headers: this._headers
+    })
+    .then((responce) => {
+      return this._checkLineOk(responce)
+    }) 
+  }
+
+  // редактирование данных профиля
+  editUserInfo(data) {   //чтобы передать данные на сервер нам необходимо по нашему api передавать в боди эти данные. 
+    return fetch(`${this._url}users/me`, { 
+      method: "PATCH", 
       headers: this._headers,
       body: JSON.stringify({
-        name: data.title,
-        link: data.link
-      }) 
+        name: data.name,
+        about: data.about
+      })
     })
-    .then((res) => {
-        if (res.ok) {
-            return res.json();
-        }
-        return Promise.reject(`Что-то пошло не так: ${res.status}`);
-        })
+    .then((responce) => {
+      return this._checkLineOk(responce)
+    }) 
   }
 
-  // Delete a card
-  deleteCard(cardId) {
-    return fetch(`${this._url}cards/${cardId}`, { 
-      method: "DELETE", 
+  // редактирование аватара 
+  editAvatar(data) {  
+    return fetch(`${this._url}users/me/avatar`, { 
+      method: "PATCH", 
       headers: this._headers,
-    })
-    .then((res) => {
-        if (res.ok) {
-            return res.json();
-        }
-        return Promise.reject(`Что-то пошло не так: ${res.status}`);
-        })
+      body: JSON.stringify({
+        avatar: data.avatar
+      })
+    }) 
+    .then((responce) => {
+      return this._checkLineOk(responce)
+    }) 
   }
-
-  //Like a card 
-  addLike(cardId) {
-    return fetch(`${this._url}cards/likes/${cardId}`, { 
-      method: "PUT", 
-      headers: this._headers,
-    })
-    .then((res) => {
-        if (res.ok) {
-            return res.json();
-        }
-        return Promise.reject(`Что-то пошло не так: ${res.status}`);
-        })
-  }
-
-  //Delete like from a card
-  deleteLike(cardId) {
-    return fetch(`${this._url}cards/likes/${cardId}`, { 
-      method: "DELETE", 
-      headers: this._headers,
-    })
-    .then((res) => {
-        if (res.ok) {
-            return res.json();
-        }
-        return Promise.reject(`Что-то пошло не так: ${res.status}`);
-        })
-  }
-  
 }
