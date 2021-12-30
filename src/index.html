@@ -83,12 +83,14 @@
         </div>
     </div>
     <div class="popup popup_type_delete">
-        <form name="delete-form" class="popup__form">
-            <button type="button" class="popup__close" aria-label="сlose"></button>
-          <h2 class="popup__title popup__title_delete">Вы уверены?</h2>
-          <button type="submit" class="popup__submit popup__button_type_delete">Да</button>
+        <div class="popup__container">
+        <button type="button" class="popup__close" aria-label="сlose"></button>
+        <h2 class="popup__title popup__title_type_delete">Вы уверены?</h2>
+        <form name="delete-form" class="popup__corn">
+          <button type="submit" class="popup__submit popup__sunmit_type_delete">Да</button>
         </form>
-      </div>
+        </div>
+    </div>
       <div class="popup popup_type_avatar">
         <div class="popup__container">
         <button type="button" class="popup__close" aria-label="сlose"></button>
@@ -98,10 +100,8 @@
         <span id="avatar-link-error" class="popup__error"></span>
         <button type="submit" class="popup__submit popup__submit_avatar">Сохранить</button>
         </form>
-      </div>
-
-
-    
+        </div>
+    </div>
 
     <!-- <script type="module" src="./pages/index.js"></script>
     <script type="module" src="./components/Card.js"></script>

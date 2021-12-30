@@ -8,10 +8,10 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import Api from "../components/Api.js";
+import PopupWithConfirmation  from "../components/PopupWithConfirmation.js";
 
 /*Объявление переменных*/
 const popupEditProfile = document.querySelector('.popup_edit-profile')
-const popupEditCloseBtn = popupEditProfile.querySelector('.popup__close');
 const profileForm = popupEditProfile.querySelector('.popup__corn');
 const nameInput = popupEditProfile.querySelector('.popup__input_field_name');
 const jobInput = popupEditProfile.querySelector('.popup__input_field_job');
@@ -19,18 +19,13 @@ const popupOpenBtn = document.querySelector('.profile__edit-button');
 const profileName = document.querySelector('.profile__info-name');
 const profileJob = document.querySelector('.profile__info-occupation');
 const popupAddCard = document.querySelector('.popup_add-card')
-const popupAddCloseBtn = popupAddCard.querySelector('.popup__close');
 const formCardElement = popupAddCard.querySelector('.popup__corn');
-const nameCardInput = popupAddCard.querySelector('.popup__input_field_card-name');
-const linkCardInput = popupAddCard.querySelector('.popup__input_field_card-link');
 const popupAddCardBtn = document.querySelector('.profile__add-button');
 const cardsList = document.querySelector('.elements__list');
 const popupImage = document.querySelector('.popup_show_image');
-const popupImageCloseBtn = popupImage.querySelector('.popup__close');
 const popupDeleteCard = document.querySelector('.popup_type_delete')
 const popupAvatar = document.querySelector('.popup_type_avatar')
 const avatarForm  = popupAvatar.querySelector('.popup__corn')
-const avatarInput = popupAvatar.querySelector('.popup__input_type_avatar')
 const profileAvatar = document.querySelector('.profile__avatar')
 const avatarOpenBtn = document.querySelector('.profile__edit-avatar')
 
@@ -44,6 +39,185 @@ const api = new Api({
     }
 }) 
 
+// * Получение данных с сервера */
+let  userId = null 
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([user, cards]) => {
+    userId = user._id;
+    userInfoProfile.setUserInfo(user);
+    userInfoProfile.setAvatar(user);
+    itemsList.renderItems(cards);
+   
+  })
+  .catch((err) => {
+    console.log(`Ошибка: ${err}`);
+    
+  })
+
+
+/*Редактирование аватарки*/
+const popupAvatarEdit = new PopupWithForm ({
+    popupSelector: popupAvatar,
+    submitForm: (data) => {
+      api.editAvatar({
+        avatar: data.avatar
+      })
+      .then((data) => {
+        userInfoProfile.setAvatar(data);
+      })
+      .then(() => {
+        popupAvatarEdit.close()
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      })
+    }
+  })
+   
+  popupAvatarEdit.setEventListener();
+  
+  const popupAvatarOpen = () => {
+    avatarValidation.clearErrors();
+    popupAvatarEdit.open()
+  }
+  avatarOpenBtn.addEventListener('click', popupAvatarOpen);
+
+
+/*Редактирование профиля пользователя*/
+
+const userInfoProfile = new UserInfo({
+  userSelector: profileName,
+  infoSelector: profileJob,
+  avatarSelector: profileAvatar
+});
+
+const popupProfileEdit = new PopupWithForm ({
+    popupSelector: popupEditProfile,
+    submitForm: (data) => { 
+      popupProfileEdit.renderLoading(true);
+        api.editUserInfo({
+          name: data.name,
+          about: data.about,
+        }) 
+          .then((data) => {
+            userInfoProfile.setUserInfo(data);
+            popupProfileEdit.close();
+          })
+          .catch((err) => {
+            console.log(`произошла ошибка: ${err}`);
+          })
+    }
+  });
+  
+  popupProfileEdit.setEventListener();
+
+const openProfileEdition = () => {
+    const getUserInfo = userInfoProfile.getUserInfo();
+    nameInput.value = getUserInfo.name
+    jobInput.value = getUserInfo.about
+    editProfileValidation.clearErrors();
+    popupProfileEdit.open()
+}
+
+popupOpenBtn.addEventListener('click', openProfileEdition);
+
+
+/*Попап для полноразмерных карточек*/
+
+const fullScreeImage = new PopupWithImage(popupImage)
+fullScreeImage.setEventListener()
+
+
+/*Попап для удаления карточек*/
+const popupConfirmDelete = new PopupWithConfirmation(popupDeleteCard)
+popupConfirmDelete.setEventListener();
+
+
+/* создание  карточки*/
+const createCard = (data) => {
+    const card = new Card({
+        data,
+        userId,
+        handleCardClick: () => {
+            fullScreeImage.open(data)
+        }, 
+        handleCardDelete: (cardId) => {
+          popupConfirmDelete.open();
+          popupConfirmDelete.setSubmition(() => {
+             api.deleteCard(cardId)
+              .then(() => {
+                popupConfirmDelete.close()
+                card.deliteCard()
+              })
+              .catch((err) => {
+                console.log(`Ошибка: ${err}`);
+              })
+            })
+          },
+      handleLikeClick: (cardId) => {
+        api.addLike(cardId)
+          .then((res) => {
+            card.like(res);
+          })
+          .catch((err) => {
+            console.log(`Ошибка: ${err}`);
+          })
+      },
+      handleLikeDelete: (cardId) => {
+        api.deleteLike(cardId)
+        .then((response) => {
+          card.like(response);
+        })
+        .catch((err) => {
+          console.log(`Ошибка: ${err}`);
+        })
+      },
+    }, "#card-template");
+    const cardElement = card.generateCard();
+    return cardElement;
+}
+
+/*Добавление новой карточки*/
+
+const popupNewCardSubmit = new PopupWithForm ({
+  popupSelector: popupAddCard,
+  submitForm:(data) => {
+    popupNewCardSubmit.renderLoading(true);
+    api.addNewCard({
+      title: data.title,
+      link: data.link
+    })
+    .then((data) => {
+    const element = createCard(data)
+     itemsList.addNewItem(element);
+    })
+    .then(() => {
+      popupNewCardSubmit.close(); 
+    })
+    .catch((err) => {
+      console.log(`Ошибка: ${err}`);
+    })
+}
+}) 
+
+popupNewCardSubmit.setEventListener();
+
+//Открытие попапа добавления карточек 
+function openAddCardPopup() {
+  addCardValidation.clearErrors();
+  popupNewCardSubmit.open()
+}
+popupAddCardBtn.addEventListener('click', openAddCardPopup);
+
+/* отрисовка массива карточек*/
+const itemsList = new Section({
+  renderer: (item) => {
+      const element = createCard(item)
+      itemsList.addItem(element)     
+  }
+}, cardsList)
+
+
 /* валидация форм*/
 
 const editProfileValidation = new FormValidator(config, profileForm);
@@ -52,136 +226,3 @@ const addCardValidation = new FormValidator(config, formCardElement);
 addCardValidation.enableValidation();
 const avatarValidation = new FormValidator(config,avatarForm);
 avatarValidation.enableValidation();
-
-/*Редактирование аватара*/
-const popupAvatarWithForm = new PopupWithForm ({
-    popupSelector: popupAvatar,
-    handleFormSubmit: (data) => {
-      api.editAvatar({
-        avatar: data.avatar
-      })
-      .then((data) => {
-        userInfoProfile.setUserAvatar(data);
-      })
-      .then(() => {
-        popupAvatarWithForm.close()
-      })
-      .catch((err) => {
-        console.log(`Ошибка: ${err}`);
-      })
-    }
-  })
-   
-  popupAvatarWithForm.setEventListener();
-  
-  // Открытие попапа редактирования аватара
-  const popupAvatarOpen = () => {
-    avatarValidation.clearErrors();
-    popupAvatarWithForm.open()
-  }
-  
-  avatarOpenBtn.addEventListener('click', popupAvatarOpen);
-  
-  
-
-// avatarOpenBtn.addEventListener('click', popupAvatarOpen)
-const userInfoProfile = new UserInfo({
-    userSelector: profileName,
-    infoSelector: profileJob,
-    avatarSelector: profileAvatar
-  });
-  
-  //console.log(userInfoProfile)
-/*Редактирование профиля пользователя*/
-const popupProfileWithForm = new PopupWithForm ({
-    popupSelector: popupEditProfile,
-    handleFormSubmit: (data) => { 
-        // Добавление новой информации на страницу  + закрытие
-        api.editUserInfo({
-          name: data.name,
-          about: data.about,
-        }) 
-          .then((data) => {
-            userInfoProfile.setUserInfo(data);
-             popupProfileWithForm.close();
-          })
-          .catch((err) => {
-            console.log(`Ошибка: ${err}`);
-          })
-    }
-  });
-  
-    popupProfileWithForm.setEventListener();
-
-
-const openProfileEdition = () => {
-    const getUserInfo = userInfoProfile.getUserInfo();
-    nameInput.value = getUserInfo.name
-    jobInput.value = getUserInfo.about
-    editProfileValidation.clearErrors();
-    popupProfileWithForm.open()
-}
-
-
-popupOpenBtn.addEventListener('click', openProfileEdition);
-
-/*Попап для добаления карточек*/
-
-const fullScreeImage = new PopupWithImage(popupImage)
-fullScreeImage.setEventListener()
-
-function openAddCardPopup() {
-    addCardValidation.clearErrors();
-    popupNewCardSubmit.open()
-}
-popupAddCardBtn.addEventListener('click', openAddCardPopup);
-
-/* создание  карточки*/
-const createCard = (item) => {
-    const card = new Card({
-        data: item,
-        handleCardClick: () => {
-            fullScreeImage.open(item)
-        }
-    }, "#card-template");
-    const cardElement = card.generateCard();
-    return cardElement;
-}
-
-/* отрисовка массива карточек*/
-const itemsList = new Section({
-    items: initialCards,
-    renderer: (item) => {
-        const element = createCard(item)
-        itemsList.addItem(element)
-        
-    }
-}, cardsList)
-
-itemsList.renderItems();
-
-/*Добавление новой карточки*/
-
-const popupNewCardSubmit = new PopupWithForm({
-    popup: popupAddCard,
-    submitForm: (data) => {
-        const newCard = createCard({name: data.title, link: data.link})
-        itemsList.addNewItem(newCard)
-        popupNewCardSubmit.close()
-    }
-
-})
-    
-popupNewCardSubmit.setEventListener();
-
-// Получаем данные с сервера (Данные профиля + данные карточек)
-Promise.all(api.getUserInfo())
-  .then((user) => {
-    const userId = user._id;
-    userProfile.setUserInfo(user);
-    userProfile.setAvatar(user);
-
-  })
-  .catch((err) => {
-    console.log(`Ошибка: ${err}`);
-  })

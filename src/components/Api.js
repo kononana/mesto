@@ -1,65 +1,130 @@
 export default class Api {
-  constructor (config) { 
-    this._url = config.url;
-    this._headers = config.headers; 
+  constructor({url, headers}) {
+      this._url = url;
+      this._headers = headers
   }
+  //receive data about current user
 
-  // отдельно выносим проверку, чтоб не писать ее каждый раз
-  _checkLineOk(responce) {
-    if (responce.ok) {  // если у объекта responce поле ок = истина
-      return responce.json(); // тогла возвращаем реальные данные (если не написать return в следующий промис не передадутся данные)
-    } return Promise.reject(`Ошибка: ${res} `) // если статус не ок, возвращаем Promise.rejec (переводим в значение rejected (отклонено))
-  }
-
-  // получение данных профиля 
-  getUserInfo() { // усли fetch ничего не возвращает, по умолчанию он вернет underfined
-    return fetch(`${this._url}users/me`, { // первый аргумент - куда направляем запрос
-      // второй аргумент - объект с настройками
-      method: "GET", // поумолчанию метод всегда GET, но лучше указывать, что б было явно видно
-      headers: this._headers
-    })
-    .then((responce) => {
-      return this._checkLineOk(responce)
-    }) //если сервер хоть чем-то ответил (даже статус 400), значит успешно, если сервер ничем не ответил, тогда fetch перейдет в значение rejected и мы перейдем в блок catch
-  }
-
-  // получение карточек 
-  getInitialCards() { 
-    return fetch(`${this._url}cards`, { 
-      method: "GET",  
-      headers: this._headers
-    })
-    .then((responce) => {
-      return this._checkLineOk(responce)
-    }) 
-  }
-
-  // редактирование данных профиля
-  editUserInfo(data) {   //чтобы передать данные на сервер нам необходимо по нашему api передавать в боди эти данные. 
-    return fetch(`${this._url}users/me`, { 
-      method: "PATCH", 
-      headers: this._headers,
-      body: JSON.stringify({
-        name: data.name,
-        about: data.about
+getUserInfo() { 
+      return fetch(`${this._url}users/me`, {
+        headers: this._headers
       })
-    })
-    .then((responce) => {
-      return this._checkLineOk(responce)
-    }) 
+      .then((res) => {
+          if (res.ok) {
+            return res.json();
+          }
+          return Promise.reject(`Что-то пошло не так: ${res.status}`);
+        })
   }
 
-  // редактирование аватара 
+//receive card-list from server
+getInitialCards() {
+      return fetch(`${this._url}cards`, {
+          headers: this._headers
+      })
+      .then((res) => {
+          if (res.ok) {
+              return res.json();
+          }
+          return Promise.reject(`Что-то пошло не так: ${res.status}`);
+          })
+  }
+
+
+//edit user profile
+ editUserInfo(data) {   
+  return fetch(`${this._url}users/me`, { 
+    method: "PATCH", 
+    headers: this._headers,
+    body: JSON.stringify({
+      name: data.name,
+      about: data.about
+    })
+  })
+  .then((res) => {
+    if (res.ok) {
+        return res.json();
+    }
+    return Promise.reject(`Что-то пошло не так: ${res.status}`);
+    })
+}
+
+  //edit avatar
   editAvatar(data) {  
-    return fetch(`${this._url}users/me/avatar`, { 
-      method: "PATCH", 
+      return fetch(`${this._url}users/me/avatar`, { 
+        method: "PATCH", 
+        headers: this._headers,
+        body: JSON.stringify({
+          avatar: data.avatar
+        })
+      }) 
+      .then((res) => {
+          if (res.ok) {
+              return res.json();
+          }
+          return Promise.reject(`Что-то пошло не так: ${res.status}`);
+          })
+  }
+  // Add new card to the Server
+  addNewCard(data) { 
+    return fetch(`${this._url}cards`, { 
+      method: "POST", 
       headers: this._headers,
       body: JSON.stringify({
-        avatar: data.avatar
+        name: data.title,
+        link: data.link
+      }) 
+    })
+  
+  .then((res) => {
+      if (res.ok) {
+          return res.json();
+      }
+      return Promise.reject(`Что-то пошло не так: ${res.status}`);
       })
-    }) 
-    .then((responce) => {
-      return this._checkLineOk(responce)
-    }) 
-  }
+}
+
+
+// Delete a card
+deleteCard(cardId) {
+  return fetch(`${this._url}cards/${cardId}`, { 
+    method: "DELETE", 
+    headers: this._headers,
+  })
+  .then((res) => {
+      if (res.ok) {
+          return res.json();
+      }
+      return Promise.reject(`Что-то пошло не так: ${res.status}`);
+      })
+}
+
+//Like chosen card 
+addLike(cardId) {
+  return fetch(`${this._url}cards/likes/${cardId}`, { 
+    method: "PUT", 
+    headers: this._headers,
+  })
+  .then((res) => {
+      if (res.ok) {
+          return res.json();
+      }
+      return Promise.reject(`Что-то пошло не так: ${res.status}`);
+      })
+}
+
+//Delete like from a card
+deleteLike(cardId) {
+  return fetch(`${this._url}cards/likes/${cardId}`, { 
+    method: "DELETE", 
+    headers: this._headers,
+  })
+  .then((res) => {
+      if (res.ok) {
+          return res.json();
+      }
+      return Promise.reject(`Что-то пошло не так: ${res.status}`);
+      })
+}
+
 }
