@@ -1,8 +1,8 @@
 import "./index.css"
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
-import { initialCards } from "./utils/constants.js";
-import { config } from "./utils/constants.js";
+// import { initialCards } from "../utils/constants";
+import { config } from "../utils/constants";
 import UserInfo from "../components/UserInfo.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import Section from "../components/Section.js";
@@ -12,20 +12,20 @@ import PopupWithConfirmation  from "../components/PopupWithConfirmation.js";
 
 /*Объявление переменных*/
 const popupEditProfile = document.querySelector('.popup_edit-profile')
-const profileForm = popupEditProfile.querySelector('.popup__corn');
+const profileForm = popupEditProfile.querySelector('.popup__form');
 const nameInput = popupEditProfile.querySelector('.popup__input_field_name');
 const jobInput = popupEditProfile.querySelector('.popup__input_field_job');
 const popupOpenBtn = document.querySelector('.profile__edit-button');
 const profileName = document.querySelector('.profile__info-name');
 const profileJob = document.querySelector('.profile__info-occupation');
 const popupAddCard = document.querySelector('.popup_add-card')
-const formCardElement = popupAddCard.querySelector('.popup__corn');
+const formCardElement = popupAddCard.querySelector('.popup__form');
 const popupAddCardBtn = document.querySelector('.profile__add-button');
 const cardsList = document.querySelector('.elements__list');
 const popupImage = document.querySelector('.popup_show_image');
 const popupDeleteCard = document.querySelector('.popup_type_delete')
 const popupAvatar = document.querySelector('.popup_type_avatar')
-const avatarForm  = popupAvatar.querySelector('.popup__corn')
+const avatarForm  = popupAvatar.querySelector('.popup__form')
 const profileAvatar = document.querySelector('.profile__avatar')
 const avatarOpenBtn = document.querySelector('.profile__edit-avatar')
 
@@ -40,12 +40,10 @@ const api = new Api({
 }) 
 
 // * Получение данных с сервера */
-let  userId = null 
+
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([user, cards]) => {
-    userId = user._id;
     userInfoProfile.setUserInfo(user);
-    userInfoProfile.setAvatar(user);
     itemsList.renderItems(cards);
    
   })
@@ -59,11 +57,12 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
 const popupAvatarEdit = new PopupWithForm ({
     popupSelector: popupAvatar,
     submitForm: (data) => {
+      popupAvatarEdit.renderLoading(true);
       api.editAvatar({
         avatar: data.avatar
       })
       .then((data) => {
-        userInfoProfile.setAvatar(data);
+        userInfoProfile.setUserInfo(data);
       })
       .then(() => {
         popupAvatarEdit.close()
@@ -71,6 +70,7 @@ const popupAvatarEdit = new PopupWithForm ({
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
       })
+      .finally(() => popupAvatarEdit.renderLoading(false))
     }
   })
    
@@ -106,6 +106,7 @@ const popupProfileEdit = new PopupWithForm ({
           .catch((err) => {
             console.log(`произошла ошибка: ${err}`);
           })
+          .finally(() => popupProfileEdit.renderLoading(false))
     }
   });
   
@@ -137,13 +138,14 @@ popupConfirmDelete.setEventListener();
 const createCard = (data) => {
     const card = new Card({
         data,
-        userId,
+        userId: userInfoProfile.getUserId(),
         handleCardClick: () => {
             fullScreeImage.open(data)
         }, 
         handleCardDelete: (cardId) => {
           popupConfirmDelete.open();
           popupConfirmDelete.setSubmition(() => {
+            popupConfirmDelete.renderLoading(true);
              api.deleteCard(cardId)
               .then(() => {
                 popupConfirmDelete.close()
@@ -152,6 +154,7 @@ const createCard = (data) => {
               .catch((err) => {
                 console.log(`Ошибка: ${err}`);
               })
+              .finally(() => popupConfirmDelete.renderLoading(false));
             })
           },
       handleLikeClick: (cardId) => {
@@ -197,6 +200,8 @@ const popupNewCardSubmit = new PopupWithForm ({
     .catch((err) => {
       console.log(`Ошибка: ${err}`);
     })
+    .finally(() => popupNewCardSubmit.renderLoading(false))
+    
 }
 }) 
 

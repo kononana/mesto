@@ -13,16 +13,16 @@ export default class UserInfo {
         avatar: this._userAvatar.src
       }
     }
+    getUserId() {
+      return this._id;
+    }
   
     setUserInfo(data) {
       this._userName.textContent = data.name;
       this._userInfo.textContent = data.about;
+      this._userAvatar.src = data.avatar;
+      this._id = data._id;
     }
 
-    // Установка аватарки
-  
-    setAvatar(data) {
-      this._userAvatar.src = data.avatar;
-    }
     
   }

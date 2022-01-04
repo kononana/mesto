@@ -31,7 +31,7 @@ const initialCards = [{
 
 /*validation config*/
 const config = {
-    formSelector: '.popup__form',
+    formSelector: '.popup__for',
     inputSelector: '.popup__input',
     buttonSelector: '.popup__submit',
     inputErrorClass: 'popup__input_type_error',

@@ -3,18 +3,22 @@ export default class Api {
       this._url = url;
       this._headers = headers
   }
+
+  // Check response
+  _checkResponse(res) {
+    if (res.ok) {  
+      return res.json(); 
+    } return Promise.reject(`Что-то пошло не так: ${res} `) 
+  }
+
   //receive data about current user
 
 getUserInfo() { 
       return fetch(`${this._url}users/me`, {
         headers: this._headers
       })
-      .then((res) => {
-          if (res.ok) {
-            return res.json();
-          }
-          return Promise.reject(`Что-то пошло не так: ${res.status}`);
-        })
+      .then(this._checkResponse)
+ 
   }
 
 //receive card-list from server
@@ -22,12 +26,8 @@ getInitialCards() {
       return fetch(`${this._url}cards`, {
           headers: this._headers
       })
-      .then((res) => {
-          if (res.ok) {
-              return res.json();
-          }
-          return Promise.reject(`Что-то пошло не так: ${res.status}`);
-          })
+      .then(this._checkResponse)
+ 
   }
 
 
@@ -41,12 +41,8 @@ getInitialCards() {
       about: data.about
     })
   })
-  .then((res) => {
-    if (res.ok) {
-        return res.json();
-    }
-    return Promise.reject(`Что-то пошло не так: ${res.status}`);
-    })
+  .then(this._checkResponse)
+ 
 }
 
   //edit avatar
@@ -58,12 +54,8 @@ getInitialCards() {
           avatar: data.avatar
         })
       }) 
-      .then((res) => {
-          if (res.ok) {
-              return res.json();
-          }
-          return Promise.reject(`Что-то пошло не так: ${res.status}`);
-          })
+      .then(this._checkResponse)
+ 
   }
   // Add new card to the Server
   addNewCard(data) { 
@@ -75,13 +67,8 @@ getInitialCards() {
         link: data.link
       }) 
     })
-  
-  .then((res) => {
-      if (res.ok) {
-          return res.json();
-      }
-      return Promise.reject(`Что-то пошло не так: ${res.status}`);
-      })
+    .then(this._checkResponse)
+ 
 }
 
 
@@ -91,12 +78,8 @@ deleteCard(cardId) {
     method: "DELETE", 
     headers: this._headers,
   })
-  .then((res) => {
-      if (res.ok) {
-          return res.json();
-      }
-      return Promise.reject(`Что-то пошло не так: ${res.status}`);
-      })
+  .then(this._checkResponse)
+ 
 }
 
 //Like chosen card 
@@ -105,12 +88,8 @@ addLike(cardId) {
     method: "PUT", 
     headers: this._headers,
   })
-  .then((res) => {
-      if (res.ok) {
-          return res.json();
-      }
-      return Promise.reject(`Что-то пошло не так: ${res.status}`);
-      })
+  .then(this._checkResponse)
+ 
 }
 
 //Delete like from a card
@@ -119,12 +98,8 @@ deleteLike(cardId) {
     method: "DELETE", 
     headers: this._headers,
   })
-  .then((res) => {
-      if (res.ok) {
-          return res.json();
-      }
-      return Promise.reject(`Что-то пошло не так: ${res.status}`);
-      })
+  .then(this._checkResponse)
+ 
 }
 
 }
